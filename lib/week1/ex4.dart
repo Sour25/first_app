@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class CustomCard extends StatelessWidget {
   final String text;
   final Color? color;
+  final Gradient? gradient;
 
-  const CustomCard({super.key, required this.text, this.color});
+  const CustomCard({super.key, required this.text, this.color, this.gradient});
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +13,14 @@ class CustomCard extends StatelessWidget {
     return Container(
       height: 80,
       decoration: BoxDecoration(
-        color: color ?? Colors.blue,
+        color: gradient == null ? color ?? Colors.blue : null,
+        gradient: gradient,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -34,7 +36,7 @@ void main() {
     MaterialApp(
       home: Scaffold(
         body: Container(
-          padding: EdgeInsets.all(40),
+          padding: const EdgeInsets.all(40),
           margin: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
             children: [
@@ -42,7 +44,12 @@ void main() {
               const SizedBox(height: 20),
               CustomCard(text: 'DART', color: Colors.blue[300]),
               const SizedBox(height: 20),
-              CustomCard(text: 'FLUTTER', color: Colors.blue[600]),
+              CustomCard(
+                text: 'FLUTTER',
+                gradient: LinearGradient(
+                  colors: [Colors.blue[300]!, Colors.blue[600]!],
+                ),
+              ),
             ],
           ),
         ),
